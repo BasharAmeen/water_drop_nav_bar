@@ -96,7 +96,7 @@ class _WaterDropNavBarState extends State<WaterDropNavBar>
       child: Stack(
         children: <Widget>[
           Align(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center,
             child: AnimatedBuilder(
               animation: _controller,
               builder: (_, __) => Row(
