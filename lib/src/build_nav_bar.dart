@@ -89,7 +89,7 @@ class _WaterDropNavBarState extends State<WaterDropNavBar>
     final Color inactiveIconColor = widget.inactiveIconColor;
     final double bottomPadding =
         widget.bottomPadding ?? MediaQuery.of(context).padding.bottom;
-    final double barHeight = 80 + bottomPadding;
+    final double barHeight = bottomPadding;
     return Container(
       height: barHeight,
       color: backgroundColor,
