@@ -89,7 +89,7 @@ class _WaterDropNavBarState extends State<WaterDropNavBar>
     final Color inactiveIconColor = widget.inactiveIconColor;
     final double bottomPadding =
         widget.bottomPadding ?? MediaQuery.of(context).padding.bottom;
-    final double barHeight = 60 + bottomPadding;
+    final double barHeight = 80 + bottomPadding;
     return Container(
       height: barHeight,
       color: backgroundColor,
@@ -105,20 +105,25 @@ class _WaterDropNavBarState extends State<WaterDropNavBar>
                 children: items.map(
                   (BarItem item) {
                     final int index = items.indexOf(item);
-                    return BuildIconButton(
-                      bottomPadding: bottomPadding,
-                      barHeight: barHeight,
-                      barColor: backgroundColor,
-                      inactiveColor: inactiveIconColor,
-                      color: dropColor,
-                      index: index,
-                      iconSize: iconSize,
-                      seletedIndex: selectedIndex.toInt(),
-                      controller: _controller,
-                      selectedIcon: item.filledIcon,
-                      unslectedIcon: item.outlinedIcon,
-                      onPressed: () => _onTap(index),
-                    );
+                    return InkWell(
+                        onTap: () => _onTap(index),
+                        child: Column(children: [
+                          BuildIconButton(
+                            bottomPadding: bottomPadding,
+                            barHeight: barHeight,
+                            barColor: backgroundColor,
+                            inactiveColor: inactiveIconColor,
+                            color: dropColor,
+                            index: index,
+                            iconSize: iconSize,
+                            seletedIndex: selectedIndex.toInt(),
+                            controller: _controller,
+                            selectedIcon: item.filledIcon,
+                            unslectedIcon: item.outlinedIcon,
+                            onPressed: () => null,
+                          ),
+                          Text(item.text, style: item.textStyle)
+                        ]));
                   },
                 ).toList(),
               ),
