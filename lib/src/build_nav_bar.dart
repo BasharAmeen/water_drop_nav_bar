@@ -108,7 +108,8 @@ class _WaterDropNavBarState extends State<WaterDropNavBar>
                       final int index = items.indexOf(item);
                       return InkWell(
                           onTap: () => _onTap(index),
-                          child: Column(children: [
+                          child:
+                              Column(mainAxisSize: MainAxisSize.min, children: [
                             BuildIconButton(
                               bottomPadding: bottomPadding,
                               barHeight: barHeight,
@@ -123,6 +124,7 @@ class _WaterDropNavBarState extends State<WaterDropNavBar>
                               unslectedIcon: item.outlinedIcon,
                               onPressed: () => null,
                             ),
+                            const SizedBox(height: 20),
                             Text(item.text, style: item.textStyle)
                           ]));
                     },
