@@ -12,6 +12,7 @@ class WaterDropNavBar extends StatefulWidget {
 
   /// Callback When individual barItem is pressed.
   final OnButtonPressCallback onItemSelected;
+  final double height;
 
   /// Current selected index of the bar item.
   final int selectedIndex;
@@ -42,6 +43,7 @@ class WaterDropNavBar extends StatefulWidget {
     this.iconSize = 28,
     Color? inactiveIconColor,
     Key? key,
+    required this.height,
   })  : inactiveIconColor = inactiveIconColor ?? waterDropColor,
         assert(barItems.length > 1, 'You must provide minimum 2 bar items'),
         assert(barItems.length < 5, 'Maximum bar items count is 4'),
@@ -90,57 +92,55 @@ class _WaterDropNavBarState extends State<WaterDropNavBar>
     final double bottomPadding =
         widget.bottomPadding ?? MediaQuery.of(context).padding.bottom;
     final double barHeight = bottomPadding;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Container(
-        color: backgroundColor,
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: AnimatedBuilder(
-                animation: _controller,
-                builder: (_, __) => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  // crossAxisAlignment: CrossAxisAlignment.end,
-                  children: items.map(
-                    (BarItem item) {
-                      final int index = items.indexOf(item);
-                      return InkWell(
-                          onTap: () => _onTap(index),
-                          child:
-                              Column(mainAxisSize: MainAxisSize.min, children: [
-                            BuildIconButton(
-                              bottomPadding: bottomPadding,
-                              barHeight: barHeight,
-                              barColor: backgroundColor,
-                              inactiveColor: inactiveIconColor,
-                              color: dropColor,
-                              index: index,
-                              iconSize: iconSize,
-                              seletedIndex: selectedIndex.toInt(),
-                              controller: _controller,
-                              selectedIcon: item.filledIcon,
-                              unslectedIcon: item.outlinedIcon,
-                              onPressed: () => null,
-                            ),
-                            const SizedBox(height: 20),
-                            Text(item.text, style: item.textStyle)
-                          ]));
-                    },
-                  ).toList(),
-                ),
+    return Container(
+      height: widget.height,
+      color: backgroundColor,
+      child: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.center,
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (_, __) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                // crossAxisAlignment: CrossAxisAlignment.end,
+                children: items.map(
+                  (BarItem item) {
+                    final int index = items.indexOf(item);
+                    return InkWell(
+                        onTap: () => _onTap(index),
+                        child:
+                            Column(mainAxisSize: MainAxisSize.min, children: [
+                          BuildIconButton(
+                            bottomPadding: bottomPadding,
+                            barHeight: barHeight,
+                            barColor: backgroundColor,
+                            inactiveColor: inactiveIconColor,
+                            color: dropColor,
+                            index: index,
+                            iconSize: iconSize,
+                            seletedIndex: selectedIndex.toInt(),
+                            controller: _controller,
+                            selectedIcon: item.filledIcon,
+                            unslectedIcon: item.outlinedIcon,
+                            onPressed: () => null,
+                          ),
+                          const SizedBox(height: 20),
+                          Text(item.text, style: item.textStyle)
+                        ]));
+                  },
+                ).toList(),
               ),
             ),
-            BuildRunningDrop(
-              itemCount: items.length,
-              controller: _controller,
-              selectedIndex: selectedIndex,
-              previousIndex: _previousIndex,
-              color: dropColor,
-            )
-          ],
-        ),
+          ),
+          BuildRunningDrop(
+            itemCount: items.length,
+            controller: _controller,
+            selectedIndex: selectedIndex,
+            previousIndex: _previousIndex,
+            color: dropColor,
+          )
+        ],
       ),
     );
   }
